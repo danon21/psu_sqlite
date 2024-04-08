@@ -40,10 +40,28 @@ class DatabaseManager:
         finally:
             session.close()
 
-    def get_client_by_code(self, p_code):
+    def get_client_by_code(self, c_code):
         session = self.Session()
         try:
-            personnel = session.query(Client).filter_by(p_code=p_code).first()
-            return personnel
+            client = session.query(Client).filter_by(p_code=c_code).first()
+            return client
+        finally:
+            session.close()
+
+    def get_personnel_dict(self):
+        session = self.Session()
+        try:
+            personnel_records = session.query(Personnel).all()
+            personnel_dict = {record.p_code: record.p_full_name for record in personnel_records}
+            return personnel_dict
+        finally:
+            session.close()
+
+    def get_client_dict(self):
+        session = self.Session()
+        try:
+            client_records = session.query(Client).all()
+            client_dict = {record.c_code: record.c_full_name for record in client_records}
+            return client_dict
         finally:
             session.close()

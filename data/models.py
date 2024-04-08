@@ -6,10 +6,10 @@ Base = declarative_base()
 
 class Client(Base):
     __tablename__ = 'clients'
-    с_code = Column(Integer, primary_key=True)
-    с_full_name = Column(String)
-    с_telephone = Column(String)
-    с_address = Column(String)
+    c_code = Column(Integer, primary_key=True)
+    c_full_name = Column(String)
+    c_telephone = Column(String)
+    c_address = Column(String)
     orders = relationship("Order", back_populates="client")
 
 class Personnel(Base):
@@ -31,7 +31,7 @@ class Order(Base):
     o_type_work = Column(String)
     o_color = Column(String)
     o_price = Column(Integer)
-    o_c_code = Column(Integer, ForeignKey('clients.с_code'))
+    o_c_code = Column(Integer, ForeignKey('clients.c_code'))
     o_state = Column(Integer)
     client = relationship("Client", back_populates="orders")
     personnel = relationship("Personnel", back_populates="orders")
