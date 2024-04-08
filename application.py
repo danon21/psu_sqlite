@@ -47,6 +47,7 @@ class Application:
             self.db_manager.get_client_dict(),
             self.db_manager.get_personnel_dict()
         )
+        self.table_manager.adjust_columns(self.ui_manager.tableView_reprotDate_2)
 
     def fill_report_table_emp(self):
         orders = self.db_manager.get_orders_by_personnel(
@@ -60,6 +61,7 @@ class Application:
             self.db_manager.get_client_dict(),
             self.db_manager.get_personnel_dict()
         )
+        self.table_manager.adjust_columns(self.ui_manager.tableView_reprotEmp_2)
 
 
 if __name__ == "__main__":

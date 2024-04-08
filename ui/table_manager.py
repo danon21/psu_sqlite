@@ -1,10 +1,17 @@
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from PyQt5 import QtWidgets
 import datetime
 
 class TableManager:
     def __init__(self):
         self.order_headers = ['Код заказа', 'Мастер', 'Клиент', 'Дата', 'Статус работы', 'Марка автомобиля', 'Детали', 'Вид работы', 'Цвет', 'Цена']
         self.order_attributes = ['o_code', 'o_p_code', 'o_c_code', 'o_date', 'o_state', 'o_car_brand', 'o_detail', 'o_type_work', 'o_color', 'o_price']
+
+    def adjust_columns(self, table_view):
+        table_view.resizeColumnsToContents()
+        header = table_view.horizontalHeader()
+        for i in range(header.count()):
+            header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
 
     def fill_order_table(self, table_view, orders, dict_clients, dict_personnel = None):
         model = QStandardItemModel()
