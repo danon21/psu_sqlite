@@ -40,15 +40,26 @@ class Application:
             self.combo_box_manager.get_selected_month(self.ui_manager.comboBox_month_2),
             self.combo_box_manager.get_selected_year(self.ui_manager.comboBox_year_2)
         )
+        orders = self.db_manager.get_orders_by_date_range(start_date=start_date, end_date=finish_date)
         self.table_manager.fill_order_table(
             self.ui_manager.tableView_reprotDate_2,
-            self.db_manager.get_orders_by_date_range(start_date=start_date, end_date=finish_date),
+            orders,
             self.db_manager.get_client_dict(),
             self.db_manager.get_personnel_dict()
         )
 
     def fill_report_table_emp(self):
-        pass
+        orders = self.db_manager.get_orders_by_personnel(
+            self.combo_box_manager.get_selected_employee_code(
+                self.ui_manager.comboBox_Emp_2
+            )
+        )
+        self.table_manager.fill_order_table(
+            self.ui_manager.tableView_reprotEmp_2,
+            orders,
+            self.db_manager.get_client_dict(),
+            self.db_manager.get_personnel_dict()
+        )
 
 
 if __name__ == "__main__":
