@@ -1,1 +1,1 @@
-PATH_DB_FILE = "car_painting.db"
+PATH_DB_FILE = "data/car_painting.db"
