@@ -1,0 +1,1 @@
+PATH_DB_FILE = "car_painting.db"
