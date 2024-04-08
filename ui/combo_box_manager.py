@@ -56,4 +56,4 @@ class ComboBoxManager:
 
     def get_selected_employee_code(self, combo_box):
         text = combo_box.currentText()
-        return text[text.find("(")+1:text.find(")")]
+        return int(text[text.find("(")+1:text.find(")")])
