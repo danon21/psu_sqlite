@@ -15,52 +15,114 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/danon/Pictures/pop-cat-icons/Pop Cat icons/Pop cat closed.ico</normaloff>C:/Users/danon/Pictures/pop-cat-icons/Pop Cat icons/Pop cat closed.ico</iconset>
+    <normaloff>C:/Users/danon/Pictures/icon/cat/Pop cat closed.ico</normaloff>C:/Users/danon/Pictures/icon/cat/Pop cat closed.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="horizontalLayoutWidget">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>10</y>
-      <width>621</width>
-      <height>31</height>
+      <x>0</x>
+      <y>0</y>
+      <width>641</width>
+      <height>481</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QComboBox" name="comboBox"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Собрать отчет</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>621</width>
-      <height>421</height>
-     </rect>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QTableView" name="tableView"/>
-     </item>
-     <item>
-      <widget class="QScrollBar" name="verticalScrollBar">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="tab_Date">
+     <attribute name="title">
+      <string>Отчет по дате</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>631</width>
+        <height>451</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_filterDate">
+         <item>
+          <widget class="QComboBox" name="comboBox_year"/>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox_month"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_buildReportDate">
+           <property name="text">
+            <string>Построить отчет</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_reprotDate">
+         <item>
+          <widget class="QTableView" name="tableView_reprotDate"/>
+         </item>
+         <item>
+          <widget class="QScrollBar" name="verticalScrollBar_reprotDate">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_Emp">
+     <attribute name="title">
+      <string>Отчет по работникам</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>631</width>
+        <height>451</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_filterEmp">
+         <item>
+          <widget class="QComboBox" name="comboBox_Emp"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_buildReportEmp">
+           <property name="text">
+            <string>Построить отчет</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_reportEmp">
+         <item>
+          <widget class="QTableView" name="tableView_reprotEmp"/>
+         </item>
+         <item>
+          <widget class="QScrollBar" name="verticalScrollBar_reprotEmp">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
