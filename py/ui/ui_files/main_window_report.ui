@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1225</width>
-    <height>406</height>
+    <height>401</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,7 +26,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget_reports">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_report1">
          <attribute name="title">
@@ -53,7 +53,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView"/>
+             <widget class="QTableView" name="tableView_date"/>
             </item>
            </layout>
           </item>
@@ -106,7 +106,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_2"/>
+             <widget class="QTableView" name="tableView_emp"/>
             </item>
            </layout>
           </item>
@@ -150,8 +150,16 @@
     <addaction name="action_reg_client"/>
     <addaction name="action_reg_emp"/>
    </widget>
-   <addaction name="menu_dim"/>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>База данных</string>
+    </property>
+    <addaction name="action_backup"/>
+    <addaction name="action_open_db_file"/>
+   </widget>
    <addaction name="menu_table"/>
+   <addaction name="menu_dim"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_brands">
@@ -202,6 +210,16 @@
   <action name="action_reg_client">
    <property name="text">
     <string>Зарегистрировать нового клиента</string>
+   </property>
+  </action>
+  <action name="action_backup">
+   <property name="text">
+    <string>Сохранить backup</string>
+   </property>
+  </action>
+  <action name="action_open_db_file">
+   <property name="text">
+    <string>Открыть из файла</string>
    </property>
   </action>
  </widget>

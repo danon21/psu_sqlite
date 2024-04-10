@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from .models import Client, Personnel, Order 
+from py.src.models import Client, Personnel, Order 
 
 class DatabaseManager:
     def __init__(self, db_file):
