@@ -1,5 +1,5 @@
 import sys
-from constants import PATH_DB_FILE
+from app.constants import PATH_DB_FILE
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from ui.main_window import Ui_MainWindow
 from data.database_manager import DatabaseManager
