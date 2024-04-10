@@ -17,6 +17,14 @@ class ComboBoxManager:
         combo_box.clear()
         for personnel in personnel_list:
             combo_box.addItem(f'{personnel.p_full_name} ({personnel.p_code})')
+    
+    def fill_combobox_by_dict(self, combobox, dict_elements: dict):
+        for key, value in dict_elements.items():
+            combobox.addItem(f'{value} ({key})')
+    
+    def get_selected_element_code(self, combo_box):
+        text = combo_box.currentText()
+        return int(text[text.find("(")+1:text.find(")")])
 
     def get_timestamp(month, year):
         if month < 1 or month > 12:
@@ -57,3 +65,18 @@ class ComboBoxManager:
     def get_selected_employee_code(self, combo_box):
         text = combo_box.currentText()
         return int(text[text.find("(")+1:text.find(")")])
+    
+    def select_element_by_code(self, combo_box, code):
+        # Проходим по всем элементам в комбобоксе
+        for index in range(combo_box.count()):
+            # Получаем текст элемента
+            item_text = combo_box.itemText(index)
+            # Ищем id в скобках
+            start_index = item_text.find("(")
+            end_index = item_text.find(")")
+            if start_index != -1 and end_index != -1:
+                item_code = int(item_text[start_index + 1:end_index])
+                # Если id совпадает, устанавливаем индекс элемента
+                if item_code == code:
+                    combo_box.setCurrentIndex(index)
+                    break
