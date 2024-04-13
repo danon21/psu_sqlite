@@ -45,11 +45,11 @@ class GUIManager:
 
         # Устанавливаем UI для каждого окна
         self.ui_report.setupUi(self.report) 
-        # self.ui_view_table.setupUi(self.view_table)
+        self.ui_view_table_orders.setupUi(self.view_table_orders)
         self.ui_view_dim.setupUi(self.view_dim) 
         self.ui_form_client.setupUi(self.form_client) 
         self.ui_form_empl.setupUi(self.form_empl) 
-        # self.ui_form_order.setupUi(self.form_order) 
+        self.ui_form_order.setupUi(self.form_order) 
         self.ui_form_backup.setupUi(self.form_backup) 
         self.ui_form_dim.setupUi(self.form_dim)
         self.ui_choise_db.setupUi(self.choise_db)
@@ -81,6 +81,15 @@ class GUIManager:
         self.show_dialog_and_block_main(self.report, self.form_backup)
         self.form_backup.exec_()
         self.unlock_main_window(self.report)
+    
+    def clearLayout(self, layout):
+        if layout:
+            while layout.count():
+                child = layout.takeAt(0)
+                if child.widget():
+                    child.widget().deleteLater()
+                if child.layout():
+                    self.clearLayout(child.layout())
 
 
         

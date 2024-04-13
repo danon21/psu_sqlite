@@ -206,7 +206,7 @@ class DatabaseManager:
         session = self.Session()
         try:
             if model:
-                session.add(model)
+                session.merge(model)
                 session.commit()
                 res = True
         except Exception:

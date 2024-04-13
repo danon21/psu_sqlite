@@ -19,6 +19,7 @@ class ComboBoxManager:
             combo_box.addItem(f'{personnel.p_full_name} ({personnel.p_code})')
     
     def fill_combobox_by_dict(self, combobox, dict_elements: dict):
+        combobox.clear()
         for key, value in dict_elements.items():
             combobox.addItem(f'{value} ({key})')
     

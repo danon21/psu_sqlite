@@ -14,11 +14,15 @@ class Manager_OrderRow(Ui_DialogViewerRowOrder):
 
     def setupUi(self, MainWindowViewerReports):
         Ui_DialogViewerRowOrder.setupUi(self, MainWindowViewerReports)
-        self.setupUi_without_model()
         self.pushButton_cancel.clicked.connect(self.cancel)
     
-    def setupUi_without_model(self):        
-        self.pushButton_save.clicked.connect(self.create_order)
+    def setupUi_without_model(self):
+        try:
+            self.pushButton_save.clicked.disconnect(self.update_order)
+        except Exception:
+            pass
+        finally:
+            self.pushButton_save.clicked.connect(self.create_order)
         self.doubleSpinBox_cost.setMaximum(100000)
         self.doubleSpinBox_cost.setValue(0)
 
@@ -58,9 +62,12 @@ class Manager_OrderRow(Ui_DialogViewerRowOrder):
         self.comboBox_detail.setCurrentIndex(0)
         self.comboBox_emp.setCurrentIndex(0)
         self.comboBox_type_work.setCurrentIndex(0)
+
+        self.label_4.setText(f'{self.label_4.text().split()[0]}')
     
     def setupUi_by_model(self, order: Order):
         self.setupUi_without_model()  
+        self.pushButton_save.clicked.disconnect(self.create_order)
         self.pushButton_save.clicked.connect(self.update_order)
 
         self.gui_manager.combobox_manager.select_element_by_code(
@@ -92,12 +99,11 @@ class Manager_OrderRow(Ui_DialogViewerRowOrder):
         self.dateEdit.setDate(
             QDate(date.year, date.month, date.day)
         )
-        self.label_4.setText(f'{self.label_4.text()} {order.o_code}')
+        self.label_4.setText(f'{self.label_4.text().split()[0]} {order.o_code}')
         self.checkBox_done.setTristate(order.o_state != 1)
         self.doubleSpinBox_cost.setValue(order.o_price)
     
     def show_window(self, parent, model = None):
-        self.setupUi(self.gui_manager.form_order)
         if model:
             self.setupUi_by_model(model)
         else:
@@ -127,7 +133,10 @@ class Manager_OrderRow(Ui_DialogViewerRowOrder):
             datetime_with_time = datetime.combine(date, datetime.now().time())
             model.o_date = int(datetime_with_time.timestamp())
             
-            res = self.gui_manager.db_manager.create_by_model(model)
+            if order_id:
+                res = self.gui_manager.db_manager.update_by_model(model)
+            else:
+                res = self.gui_manager.db_manager.create_by_model(model)
             if not res: 
                 raise Exception
 
@@ -138,7 +147,7 @@ class Manager_OrderRow(Ui_DialogViewerRowOrder):
             QMessageBox.warning(self.gui_manager.form_order, "Ошибка", "Возникла ошибка при сохранении заказа в базу данных!")
     
     def update_order(self):
-        code = int(self.label_4.text().split(": ")[1])
+        code = int(self.label_4.text().split(" ")[1])
         self.create_order(code);
 
     def cancel(self):

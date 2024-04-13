@@ -32,7 +32,7 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         self.gui_manager.table_manager.adjust_columns(self.gui_manager.ui_report.tableView_date)
     
     def show_table_orders(self):
-        self.gui_manager.ui_view_table_orders.setupUi(self.gui_manager.view_table_orders)
+        self.gui_manager.ui_view_table_orders.setup_combobox()
         self.gui_manager.show_dialog_and_block_main(
             dialog=self.gui_manager.view_table_orders,
             main=self.gui_manager.report
