@@ -41,6 +41,14 @@ class DatabaseManager:
             return personnel
         finally:
             session.close()
+    
+    def get_all_clients(self):
+        session = self.Session()
+        try:
+            clients = session.query(Client).order_by(desc(Client.c_code)).all()
+            return clients
+        finally:
+            session.close()
 
 
     def get_personnel_by_code(self, p_code):
@@ -225,14 +233,6 @@ class DatabaseManager:
         finally:
             session.close()
             return res
-
-    def get_client_by_code(self, c_code):
-        session = self.Session()
-        try:
-            client = session.query(Client).filter_by(p_code=c_code).first()
-            return client
-        finally:
-            session.close()
 
     def get_personnel_dict(self):
         session = self.Session()

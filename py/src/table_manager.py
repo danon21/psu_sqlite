@@ -6,6 +6,10 @@ class TableManager:
     def __init__(self):
         self.order_headers = ['Код заказа', 'Мастер', 'Клиент', 'Дата', 'Статус работы', 'Марка автомобиля', 'Детали', 'Вид работы', 'Цвет', 'Цена']
         self.order_attributes = ['o_code', 'o_p_code', 'o_c_code', 'o_date', 'o_state', 'o_car_brand', 'o_detail', 'o_type_work', 'o_color', 'o_price']
+        self.client_headers = ['Код клиента', 'ФИО', 'Телефон', 'Адрес']
+        self.client_attributes = ['c_code', 'c_full_name', 'c_telephone', 'c_address']
+        self.personnel_headers = ['Код работника', 'ФИО', 'Телефон', 'Адрес', 'Должность']
+        self.personnel_attributes = ['p_code', 'p_full_name', 'p_telephone', 'p_address', 'p_job_title']
 
     def adjust_columns(self, table_view):
         table_view.resizeColumnsToContents()
@@ -17,6 +21,7 @@ class TableManager:
         model = table_view.model()
         if model is not None:
             model.removeRows(0, model.rowCount())
+
 
     def fill_order_table(self, table_view, orders, dict_clients, dict_personnel = None):
         model = QStandardItemModel()
@@ -40,6 +45,36 @@ class TableManager:
                         value = 'Выполнено'
                 else:
                     value = getattr(order, attribute)
+                item = QStandardItem(str(value))
+                row.append(item)
+            model.appendRow(row)
+
+        table_view.setModel(model)
+    
+    def fill_client_table(self, table_view, clients):
+        model = QStandardItemModel()
+        model.setColumnCount(len(self.client_headers))
+        model.setHorizontalHeaderLabels(self.client_headers)
+
+        for client in clients:
+            row = []
+            for attribute in self.client_attributes:
+                value = getattr(client, attribute)
+                item = QStandardItem(str(value))
+                row.append(item)
+            model.appendRow(row)
+
+        table_view.setModel(model)
+    
+    def fill_personnel_table(self, table_view, personnels):
+        model = QStandardItemModel()
+        model.setColumnCount(len(self.personnel_headers))
+        model.setHorizontalHeaderLabels(self.personnel_headers)
+
+        for personnel in personnels:
+            row = []
+            for attribute in self.personnel_attributes:
+                value = getattr(personnel, attribute)
                 item = QStandardItem(str(value))
                 row.append(item)
             model.appendRow(row)

@@ -1,16 +1,17 @@
 from PyQt5 import QtWidgets
 from py.ui.combo_box_manager import ComboBoxManager
 from py.src.table_manager import TableManager
-from py.ui.ui_class.table_viewer import Ui_Dialog
 from py.ui.ui_class.dim_elements import Ui_DialogViewerDimElements
-from py.ui.ui_class.row_client import Ui_DialogViewerRowClient
-from py.ui.ui_class.row_empl import Ui_DialogViewerRowEmpl
 from py.ui.ui_class.create_dim_backup import Ui_DialogCreateDimBackup
 from py.ui.ui_managers.choise_db_manager import Manager_DialogStartAppDbChange
 from py.ui.ui_managers.report_manager import Manager_MainWindowViewerReports
 from py.ui.ui_managers.create_backup_manager import Manager_DialogCreateBackup
 from py.ui.ui_managers.table_viewer_orders_manager import Manager_DialogTableOrder
-from py.ui.ui_managers.order_row_manager import Manager_OrderRow
+from py.ui.ui_managers.table_viewer_clients_manager import Manager_DialogTableClient
+from py.ui.ui_managers.table_viewer_emp_manager import Manager_DialogTableEmp
+from py.ui.ui_managers.row_order_manager import Manager_OrderRow
+from py.ui.ui_managers.row_client_manager import Manager_OrderClient
+from py.ui.ui_managers.row_empl_manager import Manager_RowEmp
 
 from py.db_manager import DatabaseManager
 
@@ -20,7 +21,8 @@ class GUIManager:
         self.db_manager = DatabaseManager()
         self.report = QtWidgets.QMainWindow()
         self.view_table_orders = QtWidgets.QDialog()
-        self.view_table = QtWidgets.QDialog()
+        self.view_table_clients = QtWidgets.QDialog()
+        self.view_table_emp = QtWidgets.QDialog()
         self.view_dim = QtWidgets.QDialog()
         self.form_client = QtWidgets.QDialog()
         self.form_empl = QtWidgets.QDialog()
@@ -34,10 +36,11 @@ class GUIManager:
         # Инициализируем UI для каждого окна
         self.ui_report = Manager_MainWindowViewerReports(self)
         self.ui_view_table_orders = Manager_DialogTableOrder(self)
-        self.ui_view_table = Ui_Dialog()
+        self.ui_view_table_clients = Manager_DialogTableClient(self)
+        self.ui_view_table_emp = Manager_DialogTableEmp(self)
         self.ui_view_dim = Ui_DialogViewerDimElements()
-        self.ui_form_client = Ui_DialogViewerRowClient()
-        self.ui_form_empl = Ui_DialogViewerRowEmpl()
+        self.ui_form_client = Manager_OrderClient(self)
+        self.ui_form_empl = Manager_RowEmp(self)
         self.ui_form_order = Manager_OrderRow(self)
         self.ui_form_backup = Manager_DialogCreateBackup(self)
         self.ui_form_dim = Ui_DialogCreateDimBackup()
@@ -46,6 +49,8 @@ class GUIManager:
         # Устанавливаем UI для каждого окна
         self.ui_report.setupUi(self.report) 
         self.ui_view_table_orders.setupUi(self.view_table_orders)
+        self.ui_view_table_clients.setupUi(self.view_table_clients)
+        self.ui_view_table_emp.setupUi(self.view_table_emp)
         self.ui_view_dim.setupUi(self.view_dim) 
         self.ui_form_client.setupUi(self.form_client) 
         self.ui_form_empl.setupUi(self.form_empl) 
