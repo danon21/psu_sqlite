@@ -15,13 +15,26 @@ class Manager_DialogTableOrder(Ui_Dialog):
             self.comboBox_row,
             self.gui_manager.db_manager.get_order_dict()
         )
+        self.DialogViewerTable.verticalHeader().setVisible(False)
         self.pushButton_create_new_row.clicked.connect(self.create_new_row)
+        self.pushButton_edit_row.clicked.connect(self.edit_row)
+
+    def fill_table(self):
+        self.gui_manager.table_manager.clear_table(self.DialogViewerTable)
+        orders = self.gui_manager.db_manager.get_all_orders()
+        self.gui_manager.table_manager.fill_order_table2(
+            self.DialogViewerTable,
+            orders,
+            self.gui_manager.db_manager.get_dimensions_dict()
+        )
+        self.gui_manager.table_manager.adjust_columns(self.gui_manager.ui_report.tableView_date)
     
     def create_new_row(self):
-        self.gui_manager.ui_form_order.setupUi(self.gui_manager.form_order)
-        self.gui_manager.show_dialog_and_block_main(
-            dialog=self.gui_manager.form_order,
-            main=self.gui_manager.view_table_orders
-        )
-        self.gui_manager.form_order.exec_()
-        self.gui_manager.unlock_main_window(self.gui_manager.view_table_orders)
+        self.gui_manager.ui_form_order.show_window(self.gui_manager.view_table_orders)
+        self.fill_table()
+
+    def edit_row(self):
+        order_id = self.gui_manager.combobox_manager.get_selected_element_code(self.comboBox_row)
+        order = self.gui_manager.db_manager.get_order_by_code(order_id)
+        self.gui_manager.ui_form_order.show_window(self.gui_manager.view_table_orders, order)
+

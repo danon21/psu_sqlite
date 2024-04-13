@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from py.src.models import Client, Personnel, Order, Brand, Color, Detail, WorkType
@@ -13,7 +13,15 @@ class DatabaseManager:
     def get_orders_by_date_range(self, start_date, end_date):
         session = self.Session()
         try:
-            orders = session.query(Order).filter(Order.o_date.between(start_date, end_date)).all()
+            orders = session.query(Order).filter(Order.o_date.between(start_date, end_date)).order_by(desc(Order.o_date)).all()
+            return orders
+        finally:
+            session.close()
+
+    def get_all_orders(self):
+        session = self.Session()
+        try:
+            orders = session.query(Order).order_by(desc(Order.o_date)).all()
             return orders
         finally:
             session.close()
@@ -21,7 +29,7 @@ class DatabaseManager:
     def get_orders_by_personnel(self, p_code):
         session = self.Session()
         try:
-            orders = session.query(Order).filter_by(o_p_code=p_code).all()
+            orders = session.query(Order).filter_by(o_p_code=p_code).order_by(desc(Order.o_date)).all()
             return orders
         finally:
             session.close()
@@ -29,7 +37,7 @@ class DatabaseManager:
     def get_all_personnel(self):
         session = self.Session()
         try:
-            personnel = session.query(Personnel).all()
+            personnel = session.query(Personnel).order_by(desc(Personnel.p_code)).all()
             return personnel
         finally:
             session.close()
@@ -155,6 +163,18 @@ class DatabaseManager:
         finally:
             session.close()
     
+    def get_dimensions_dict(self):
+        res = {
+            'clients': self.get_client_dict(),
+            'personnals': self.get_personnals_dict(),
+            'orders': self.get_order_dict(),
+            'brands': self.get_brand_dict(),
+            'colors': self.get_color_dict(),
+            'details': self.get_detail_dict(),
+            'work_type': self.get_work_type_dict(),
+        }
+        return res
+
 
     def delete_by_model(self, model):
         session = self.Session()
@@ -170,6 +190,19 @@ class DatabaseManager:
             return res
     
     def create_by_model(self, model):
+        session = self.Session()
+        try:
+            if model:
+                session.add(model)
+                session.commit()
+                res = True
+        except Exception:
+            res = False
+        finally:
+            session.close()
+            return res
+    
+    def update_by_model(self, model):
         session = self.Session()
         try:
             if model:

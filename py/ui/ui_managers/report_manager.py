@@ -4,8 +4,8 @@ from py.ui.ui_class.main_window_report import Ui_MainWindowViewerReports
 # from py.gui_manager import GUIManager
 
 class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
-    def __init__(self, gui_manager=None):
     # def __init__(self, gui_manager : GUIManager=None):
+    def __init__(self, gui_manager=None):
         super().__init__()
         self.gui_manager = gui_manager
 
@@ -14,6 +14,7 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         self.action_open_db_file.triggered.connect(self.gui_manager.start_application)
         self.action_backup.triggered.connect(self.gui_manager.save_backup)
         self.action_orders.triggered.connect(self.show_table_orders)
+        self.action_add_order.triggered.connect(self.create_new_row)
         self.gui_manager.ui_report.pushButton_report_date.clicked.connect(self.fill_report_table_date)
         self.gui_manager.ui_report.pushButton_report_emp.clicked.connect(self.fill_report_table_emp)
 
@@ -23,11 +24,10 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
             self.gui_manager.combobox_manager.get_selected_year(self.gui_manager.ui_report.comboBox_year)
         )
         orders = self.gui_manager.db_manager.get_orders_by_date_range(start_date=start_date, end_date=finish_date)
-        self.gui_manager.table_manager.fill_order_table(
+        self.gui_manager.table_manager.fill_order_table2(
             self.gui_manager.ui_report.tableView_date,
             orders,
-            self.gui_manager.db_manager.get_client_dict(),
-            self.gui_manager.db_manager.get_personnel_dict()
+            self.gui_manager.db_manager.get_dimensions_dict()
         )
         self.gui_manager.table_manager.adjust_columns(self.gui_manager.ui_report.tableView_date)
     
@@ -37,6 +37,7 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
             dialog=self.gui_manager.view_table_orders,
             main=self.gui_manager.report
         )
+        self.gui_manager.ui_view_table_orders.fill_table()
         self.gui_manager.view_table_orders.exec_()
         self.gui_manager.unlock_main_window(self.gui_manager.report)
 
@@ -75,3 +76,10 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         self.fill_combobox_year()
         self.fill_combobox_month()
         self.fill_combobox_emp()
+    
+    def create_new_row(self):
+        self.gui_manager.ui_form_order.show_window(self.gui_manager.report)
+        self.gui_manager.table_manager.clear_table(self.tableView_date)
+        self.fill_report_table_date()
+        self.gui_manager.table_manager.clear_table(self.tableView_emp)
+        self.fill_report_table_emp()
