@@ -1,1 +1,0 @@
-PATH_DB_FILE = "data/car_painting.db"
