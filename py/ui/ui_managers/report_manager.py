@@ -22,6 +22,11 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         self.action_reg_client.triggered.connect(self.create_new_client)
         self.action_reg_emp.triggered.connect(self.create_new_emp)
 
+        self.action_brands.triggered.connect(self.show_dim_brands)
+        self.action_details.triggered.connect(self.show_dim_detail)
+        self.action_colors.triggered.connect(self.show_dim_color)
+        self.action_works.triggered.connect(self.show_dim_work)
+
         self.pushButton_report_date.clicked.connect(self.fill_report_table_date)
         self.pushButton_report_emp.clicked.connect(self.fill_report_table_emp)
 
@@ -45,7 +50,7 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
                 self.gui_manager.ui_report.comboBox_emp
             )
         )
-        self.gui_manager.table_manager.fill_order_table2(
+        self.gui_manager.table_manager.fill_order_table_emp(
             self.gui_manager.ui_report.tableView_emp,
             orders,
             self.gui_manager.db_manager.get_dimensions_dict(),
@@ -61,6 +66,7 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         )
         self.gui_manager.ui_view_table_orders.fill_table()
         self.gui_manager.view_table_orders.exec_()
+        self.refresh()
         self.gui_manager.unlock_main_window(self.gui_manager.report)
     
     def show_table_clients(self):
@@ -71,6 +77,47 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         )
         self.gui_manager.ui_view_table_clients.fill_table()
         self.gui_manager.view_table_clients.exec_()
+        self.refresh()
+        self.gui_manager.unlock_main_window(self.gui_manager.report)
+
+    def show_dim_brands(self):
+        self.gui_manager.show_dialog_and_block_main(
+            dialog=self.gui_manager.view_dim_brand,
+            main=self.gui_manager.report
+        )
+        self.gui_manager.ui_view_dim_brand.fill_table()
+        self.gui_manager.view_dim_brand.exec_()
+        self.refresh()
+        self.gui_manager.unlock_main_window(self.gui_manager.report)
+
+    def show_dim_detail(self):
+        self.gui_manager.show_dialog_and_block_main(
+            dialog=self.gui_manager.view_dim_detail,
+            main=self.gui_manager.report
+        )
+        self.gui_manager.ui_view_dim_detail.fill_table()
+        self.gui_manager.view_dim_detail.exec_()
+        self.refresh()
+        self.gui_manager.unlock_main_window(self.gui_manager.report)
+    
+    def show_dim_color(self):
+        self.gui_manager.show_dialog_and_block_main(
+            dialog=self.gui_manager.view_dim_color,
+            main=self.gui_manager.report
+        )
+        self.gui_manager.ui_view_dim_color.fill_table()
+        self.gui_manager.view_dim_color.exec_()
+        self.refresh()
+        self.gui_manager.unlock_main_window(self.gui_manager.report)
+    
+    def show_dim_work(self):
+        self.gui_manager.show_dialog_and_block_main(
+            dialog=self.gui_manager.view_dim_type_work,
+            main=self.gui_manager.report
+        )
+        self.gui_manager.ui_view_dim_type_work.fill_table()
+        self.gui_manager.view_dim_type_work.exec_()
+        self.refresh()
         self.gui_manager.unlock_main_window(self.gui_manager.report)
     
     def show_table_emp(self):
@@ -81,6 +128,7 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
         )
         self.gui_manager.ui_view_table_emp.fill_table()
         self.gui_manager.view_table_emp.exec_()
+        self.refresh()
         self.gui_manager.unlock_main_window(self.gui_manager.report)
     
     def clear_table(self):
@@ -123,8 +171,4 @@ class Manager_MainWindowViewerReports(Ui_MainWindowViewerReports):
     
     def create_new_emp(self):
         self.gui_manager.ui_form_empl.show_window(self.gui_manager.report)
-        # self.gui_manager.combobox_manager.fill_combobox_by_dict(
-        #     self.comboBox_emp,
-        #     self.gui_manager.db_manager.get_dimensions_dict()
-        # )
         self.refresh()

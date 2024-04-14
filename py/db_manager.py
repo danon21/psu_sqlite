@@ -78,7 +78,7 @@ class DatabaseManager:
     def get_brand_by_code(self, b_code):
         session = self.Session()
         try:
-            brand = session.query(Brand).filter_by(b_code=b_code).first()
+            brand = session.query(Brand).filter_by(m_code=b_code).first()
             return brand
         finally:
             session.close()

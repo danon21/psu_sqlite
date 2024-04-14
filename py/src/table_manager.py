@@ -6,6 +6,8 @@ class TableManager:
     def __init__(self):
         self.order_headers = ['Код заказа', 'Мастер', 'Клиент', 'Дата', 'Статус работы', 'Марка автомобиля', 'Детали', 'Вид работы', 'Цвет', 'Цена']
         self.order_attributes = ['o_code', 'o_p_code', 'o_c_code', 'o_date', 'o_state', 'o_car_brand', 'o_detail', 'o_type_work', 'o_color', 'o_price']
+        self.order_headers_emp = ['Код заказа', 'Клиент', 'Дата', 'Статус работы', 'Марка автомобиля', 'Детали', 'Вид работы', 'Цвет', 'Цена']
+        self.order_attributes_emp = ['o_code', 'o_c_code', 'o_date', 'o_state', 'o_car_brand', 'o_detail', 'o_type_work', 'o_color', 'o_price']
         self.client_headers = ['Код клиента', 'ФИО', 'Телефон', 'Адрес']
         self.client_attributes = ['c_code', 'c_full_name', 'c_telephone', 'c_address']
         self.personnel_headers = ['Код работника', 'ФИО', 'Телефон', 'Адрес', 'Должность']
@@ -46,6 +48,7 @@ class TableManager:
                 else:
                     value = getattr(order, attribute)
                 item = QStandardItem(str(value))
+                item.setEditable(False)
                 row.append(item)
             model.appendRow(row)
 
@@ -61,6 +64,7 @@ class TableManager:
             for attribute in self.client_attributes:
                 value = getattr(client, attribute)
                 item = QStandardItem(str(value))
+                item.setEditable(False)
                 row.append(item)
             model.appendRow(row)
 
@@ -76,6 +80,7 @@ class TableManager:
             for attribute in self.personnel_attributes:
                 value = getattr(personnel, attribute)
                 item = QStandardItem(str(value))
+                item.setEditable(False)
                 row.append(item)
             model.appendRow(row)
 
@@ -112,6 +117,42 @@ class TableManager:
                 else:
                     value = getattr(order, attribute)
                 item = QStandardItem(str(value))
+                item.setEditable(False)
+                row.append(item)
+            model.appendRow(row)
+
+        table_view.setModel(model)
+    
+    def fill_order_table_emp(self, table_view, orders, dimensions : dict = None):
+        model = QStandardItemModel()
+        model.setColumnCount(len(self.order_headers_emp))
+        model.setHorizontalHeaderLabels(self.order_headers_emp)
+
+        for order in orders:
+            row = []
+            for attribute in self.order_attributes_emp:
+                if attribute == 'o_c_code':
+                    value = dimensions.get('clients', dict()).get(getattr(order, attribute), '---')
+                elif attribute == 'o_car_brand':
+                    value = dimensions.get('brands', dict()).get(getattr(order, attribute), '---')
+                elif attribute == 'o_detail':
+                    value = dimensions.get('details', dict()).get(getattr(order, attribute), '---')
+                elif attribute == 'o_type_work':
+                    value = dimensions.get('work_type', dict()).get(getattr(order, attribute), '---')
+                elif attribute == 'o_color':
+                    value = dimensions.get('colors', dict()).get(getattr(order, attribute), '---')
+                elif attribute == 'o_date':
+                    date = datetime.datetime.fromtimestamp(getattr(order, attribute))
+                    value = date.strftime('%d.%m.%Y')
+                elif attribute == 'o_state':
+                    if getattr(order, attribute) == 1:
+                        value = 'В работе'
+                    else:
+                        value = 'Выполнено'
+                else:
+                    value = getattr(order, attribute)
+                item = QStandardItem(str(value))
+                item.setEditable(False)
                 row.append(item)
             model.appendRow(row)
 
